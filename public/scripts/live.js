@@ -127,6 +127,23 @@ class Game extends React.Component {
 }
 */
 
+//https://github.com/chjj/marked
+marked.setOptions({
+	renderer: new marked.Renderer(),
+	gfm: true,
+	tables: true,
+	breaks: false,
+	pedantic: false,
+	sanitize: false,
+	smartLists: true,
+	smartypants: false
+});
+
+//https://facebook.github.io/react/docs/dom-elements.html
+function createMarkup(markup) {
+	return { __html: markup };
+}
+
 var InputForm = function (_React$Component) {
 	_inherits(InputForm, _React$Component);
 
@@ -142,12 +159,6 @@ var InputForm = function (_React$Component) {
 			return React.createElement(
 				'form',
 				null,
-				React.createElement(
-					'label',
-					null,
-					'Input'
-				),
-				React.createElement('br', null),
 				React.createElement('textarea', { value: this.props.input, onChange: this.props.handleChange })
 			);
 		}
@@ -155,6 +166,9 @@ var InputForm = function (_React$Component) {
 
 	return InputForm;
 }(React.Component);
+
+//https://facebook.github.io/react/docs/forms.html
+
 
 var OutputForm = function (_React$Component2) {
 	_inherits(OutputForm, _React$Component2);
@@ -168,11 +182,7 @@ var OutputForm = function (_React$Component2) {
 	_createClass(OutputForm, [{
 		key: 'render',
 		value: function render() {
-			return React.createElement(
-				'div',
-				null,
-				this.props.output
-			);
+			return React.createElement('div', { dangerouslySetInnerHTML: createMarkup(this.props.output) });
 		}
 	}]);
 
@@ -189,7 +199,7 @@ var App = function (_React$Component3) {
 
 		_this3.state = {
 			input: 'Input',
-			output: 'Output'
+			output: '<h1>Output</h1>'
 		};
 
 		_this3.handleChange = _this3.handleChange.bind(_this3);
@@ -200,7 +210,7 @@ var App = function (_React$Component3) {
 		key: 'handleChange',
 		value: function handleChange(event) {
 			this.setState({ input: event.target.value });
-			this.setState({ output: event.target.value });
+			this.setState({ output: marked(event.target.value) });
 		}
 	}, {
 		key: 'render',

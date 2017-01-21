@@ -131,7 +131,7 @@ gulp.task('sync', function(){
     	proxy: "http://localhost/React/markdown/public/"
 	});
 
-	gulp.watch(THEME_PATH+"/*.*").on('change', bs.reload);
+	gulp.watch(THEME_PATH+"/**/*.*").on('change', bs.reload);
 });
 
 //Export src files to zip

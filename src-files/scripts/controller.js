@@ -118,6 +118,23 @@ class Game extends React.Component {
 }
 */
 
+//https://github.com/chjj/marked
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false
+});
+
+//https://facebook.github.io/react/docs/dom-elements.html
+function createMarkup(markup) {
+  return {__html: markup};
+}
+
 class InputForm extends React.Component {
 	constructor(props) {
 		super(props);
@@ -126,13 +143,13 @@ class InputForm extends React.Component {
 	render() {
 		return (
 			<form>
-				<label>Input</label><br />
 				<textarea value={this.props.input} onChange={this.props.handleChange} />
 			</form>
 		);
 	}
 }
 
+//https://facebook.github.io/react/docs/forms.html
 class OutputForm extends React.Component {
 	constructor(props) {
 		super(props);
@@ -141,9 +158,7 @@ class OutputForm extends React.Component {
 
 	render() {
 		return (
-			<div>
-				{this.props.output}
-			</div>
+			<div dangerouslySetInnerHTML={createMarkup(this.props.output)}></div>
 		);
 	}
 }
@@ -153,7 +168,7 @@ class App extends React.Component {
 		super();
 		this.state = {
 			input: 'Input',
-			output: 'Output'
+			output: '<h1>Output</h1>'
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -161,7 +176,7 @@ class App extends React.Component {
 
 	handleChange(event) {
 		this.setState({input: event.target.value});
-		this.setState({output: event.target.value});
+		this.setState({output: marked(event.target.value)});
 	}
 
 	render() {
