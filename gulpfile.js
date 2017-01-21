@@ -11,6 +11,8 @@ var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var babel = require('gulp-babel');
 
+var bs = require('browser-sync').create();
+
 var declare = require('gulp-declare');
 var wrap = require('gulp-wrap');
 
@@ -123,6 +125,15 @@ gulp.task('clean', function(){
 });
 */
 
+gulp.task('sync', function(){
+  console.log('Syncing...');
+  	bs.init({
+    	proxy: "http://localhost/React/markdown/public/"
+	});
+
+	gulp.watch(THEME_PATH+"/*.*").on('change', bs.reload);
+});
+
 //Export src files to zip
 gulp.task('export', function(){
   console.log('Exporting...');
@@ -132,7 +143,7 @@ gulp.task('export', function(){
 });
 
 // Default task, will run all common tasks at once
-gulp.task('default', ['sass-styles','images','scripts'], function() {
+gulp.task('default', ['sass-styles','images','scripts', 'sync'], function() {
     console.log('Gulping...');
 
 });

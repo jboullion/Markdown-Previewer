@@ -27,7 +27,7 @@ var Board = function (_React$Component) {
 		function Board() {
 				_classCallCheck(this, Board);
 
-				return _possibleConstructorReturn(this, Object.getPrototypeOf(Board).apply(this, arguments));
+				return _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).apply(this, arguments));
 		}
 
 		_createClass(Board, [{
@@ -85,7 +85,7 @@ var Game = function (_React$Component2) {
 		function Game() {
 				_classCallCheck(this, Game);
 
-				var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(Game).call(this));
+				var _this3 = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this));
 
 				_this3.state = {
 						history: [{
@@ -197,11 +197,10 @@ ReactDOM.render(React.createElement(Game, null), document.getElementById('contai
 function calculateWinner(squares) {
 		var lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 		for (var i = 0; i < lines.length; i++) {
-				var _lines$i = _slicedToArray(lines[i], 3);
-
-				var a = _lines$i[0];
-				var b = _lines$i[1];
-				var c = _lines$i[2];
+				var _lines$i = _slicedToArray(lines[i], 3),
+				    a = _lines$i[0],
+				    b = _lines$i[1],
+				    c = _lines$i[2];
 
 				if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
 						return squares[a];
